@@ -1,0 +1,9 @@
+#00A76ECC ---> dark green
+#A9A9A933 ---> light green
+#3E3E3E   ---> dark
+#A9A9A9   ---> grey
+#FAFAFA   ---> screen
+#CACACA   ---> border , 1px
+#FE2D3F   ---> error , 2px
+#18AF7C   ---> success ,2px
+#FD9942   ---> yellow , 2px
