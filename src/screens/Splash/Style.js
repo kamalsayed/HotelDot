@@ -4,7 +4,26 @@ export const Style=StyleSheet.create({
     mainContainer:{
         flex:1,
         backgroundColor:`${Color.darkgreen}`,
+        flexDirection:'column'
+    },
+    mid:{
+        flex:1,
         justifyContent:'center',
         alignItems:'center',
+       resizeMode:'contain'
     }
+    ,bot:{
+        tintColor:`${Color.white}`,
+        alignSelf:'flex-end',
+        resizeMode:'contain',
+     
+        
+    },
+    top:{
+        tintColor:`${Color.white}`,
+        transform: [{rotate: '-180deg'}],
+        resizeMode:'contain',
+        
+    }
+   
 });
