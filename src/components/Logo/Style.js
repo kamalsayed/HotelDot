@@ -10,6 +10,7 @@ export const Style = StyleSheet.create({
     imgStyle:{
         margin:20,
         
-    }
+    },
+
 
 });

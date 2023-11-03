@@ -5,6 +5,7 @@ import { Style } from "./Style";
 const Logo = ()=>{
     return(
         <View style={Style.imgContainer}>
+          
             <Image style={Style.imgStyle} source={ImgPath.logo} />
         </View>
     );
