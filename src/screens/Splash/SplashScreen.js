@@ -3,7 +3,7 @@ import Logo from "../../components/Logo/Logo";
 import { Style } from "./Style";
 
 import { ImgPath } from "../../constants/images";
-const SplashScreen = ()=>{
+const CustomSplashScreen = ()=>{
     return(
         <View style={Style.mainContainer}>
            
@@ -20,4 +20,4 @@ const SplashScreen = ()=>{
 
 }
 
-export default SplashScreen;
+export default CustomSplashScreen;
