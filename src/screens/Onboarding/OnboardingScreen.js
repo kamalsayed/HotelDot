@@ -4,10 +4,13 @@ import MyButton from "../../components/Button/MyButton";
 import Style from "./Style";
 import { useCallback } from "react";
 
+
 const OnboardingScreen = ({navigation})=>{
+
     const go = useCallback(()=>{
         navigation.navigate('Auth');
     },[]);
+
     return(
         <>
         <SafeAreaView>
@@ -29,7 +32,7 @@ const OnboardingScreen = ({navigation})=>{
         </View>
 
             <View style={Style.btn}>
-           <MyButton  props={{Action:"Next",size:"small",onCallback:{go}}} />
+           <MyButton  props={{Action:"Next",size:"small",onCallback:go}} />
            </View>
            </SafeAreaView>
         </>

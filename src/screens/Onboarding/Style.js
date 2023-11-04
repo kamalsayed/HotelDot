@@ -6,7 +6,7 @@ const Style = StyleSheet.create({
     borderTopRightRadius:35,
     borderBottomRightRadius:35,
     marginRight:5,
-    height:'77%',
+    height:'80%',
     width:'88%',
     top:'8%',
     resizeMode:'cover'

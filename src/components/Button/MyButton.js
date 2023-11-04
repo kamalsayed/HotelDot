@@ -6,7 +6,6 @@ const MyButton = ({props})=>{
     const [size,setSize]=useState('small');
     useEffect(()=>{
         setSize(`${props.size}`)
-        
     }
     
     ,[]);
@@ -15,8 +14,9 @@ const MyButton = ({props})=>{
 
     return(
     <>
-    <TouchableOpacity style={Style.button} onPress={()=>{props.onCallback}}>
-        {size === 'small' ?  <Text style={Style.small}> {props.Action} </Text> :
+    <TouchableOpacity style={Style.button} onPress={()=>{props.onCallback()}}>
+        {size === 'small' ?  
+            <Text style={Style.small}> {props.Action} </Text> :
             <Text style={Style.large}> {props.Action} </Text>
         }
       
