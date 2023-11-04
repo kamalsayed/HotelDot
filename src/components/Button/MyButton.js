@@ -14,7 +14,7 @@ const MyButton = ({props})=>{
 
     return(
     <>
-    <TouchableOpacity style={Style.button} onPress={()=>{props.onCallback()}}>
+    <TouchableOpacity activeOpacity={1} style={size ==='small' ? Style.button : Style.buttonL} onPress={()=>{props.onCallback()}}>
         {size === 'small' ?  
             <Text style={Style.small}> {props.Action} </Text> :
             <Text style={Style.large}> {props.Action} </Text>

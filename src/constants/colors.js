@@ -9,7 +9,8 @@ const Color={
     error : "#FE2D3F",
     success:"#18AF7C",
     yellow:"#FD9942",
-    white:"#FFF",
+    white:"#FFFFFF",
+    shadow:'#939393',
 }
 
 export default Color;

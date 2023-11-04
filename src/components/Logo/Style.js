@@ -14,7 +14,7 @@ export const Style = StyleSheet.create({
         width:30,
     },
     imgLoginStyle:{
-        margin:20,
+        margin:15,
         resizeMode:'contain',
         height:25,
         width:25,
@@ -22,7 +22,7 @@ export const Style = StyleSheet.create({
     },
     imgLoginContainer:{
         borderRadius:5,
-        backgroundColor:`${Color.darkgreen}`
+        backgroundColor:`${Color.success}`
     }
 
 });

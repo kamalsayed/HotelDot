@@ -7,6 +7,11 @@ import { loadFonts } from './src/constants/expo-fonts';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthScreen from './src/screens/Auth/AuthScreen';
+import { store } from './src/Redux/store'
+import { Provider } from 'react-redux'
+
+
+
 
 
 const Stack = createNativeStackNavigator();
@@ -28,7 +33,8 @@ export default function App() {
     
   return (
     <>
-      
+      <Provider store={store}>
+
       {splash ?  <CustomSplashScreen /> 
      :  <>
       <NavigationContainer >
@@ -41,16 +47,15 @@ export default function App() {
         }} name="Auth" component={AuthScreen} />
       </Stack.Navigator>
      </NavigationContainer>
+
+       
      </>
-
-     
-
 
       }
      
       
 
-    
+     </Provider>
 
     
      </>
