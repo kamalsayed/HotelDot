@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthScreen from './src/screens/Auth/AuthScreen';
 import { store } from './src/Redux/store'
 import { Provider } from 'react-redux'
+import HomeScreen from './src/screens/Home/HomeScreen';
 
 
 
@@ -45,6 +46,9 @@ export default function App() {
         <Stack.Screen options={{
           headerShown:false,
         }} name="Auth" component={AuthScreen} />
+        <Stack.Screen options={{
+          headerShown:false,
+        }} name="Home" component={HomeScreen} />
       </Stack.Navigator>
      </NavigationContainer>
 

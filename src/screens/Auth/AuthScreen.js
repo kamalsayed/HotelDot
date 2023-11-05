@@ -7,17 +7,21 @@ import LoginScreen from "./LoginScreen";
 import RegisterScreen from "./RegisterScreen";
 import MyButton from "../../components/Button/MyButton";
 import { useSelector, useDispatch } from 'react-redux'
-import { setUser , ResetUser } from '../../Redux/userSlice'
+import { ResetUser } from '../../Redux/userSlice';
 import {  createUserWithEmailAndPassword , signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc ,getDocs,query, collection , where , limit,get} from "firebase/firestore";
 
 
-const AuthScreen = ()=>{
+const AuthScreen = ({navigation})=>{
 
   const user = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
-  
   const [selected,SetSelected]=useState(0);
+
+
+
+
+
 
   const ActionAuth = useCallback((user,selected)=>{
       if(selected===0){
@@ -27,6 +31,7 @@ const AuthScreen = ()=>{
       }
   },[user,selected]);
 
+  //signup -> firebase
   const handleSignUp = async (email, password, username) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -36,24 +41,31 @@ const AuthScreen = ()=>{
       });
 
       Alert.alert('Success', 'Account created successfully');
+      dispatch(ResetUser());
+      SetSelected(0);
     } catch (error) {
       Alert.alert('Error', error.message);
     }
   };
 
+  //signin -> firebase
   const handleSignIn = async (emailOrUsername, password) => {
     try {
-      let user;
+      
       if(emailOrUsername.includes('@')){
-        user = await signInWithEmailAndPassword(auth,emailOrUsername, password);
+        await signInWithEmailAndPassword(auth,emailOrUsername, password);
       }else{
-        const querySnapshot = await getDocs(query(collection(database,'users') , where('username', '==', emailOrUsername) , limit(1)));
+        await getDocs(query(collection(database,'users') , where('username', '==', emailOrUsername) , limit(1)));
       }
       Alert.alert('Success', 'Logged in successfully');
+      navigation.navigate('Home');
+
     } catch (error) {
       Alert.alert('Error', error.message);
     }
   };
+
+  
 
 
 

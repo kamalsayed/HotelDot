@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Feather } from '@expo/vector-icons';
 import Color from "../../constants/colors";
 import { useSelector, useDispatch } from 'react-redux'
-import { setUser } from '../../Redux/userSlice'
+import { setUsermail, setUsername, setUserpassword} from '../../Redux/userSlice'
 
 
 
@@ -15,8 +15,6 @@ const LoginScreen =({props})=>{
     const dispatch = useDispatch();
 
     const [showPassword, setShowPassword] = useState(false); 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const toggleShowPassword = () => { 
         setShowPassword(!showPassword); 
     }; 
@@ -25,30 +23,32 @@ const LoginScreen =({props})=>{
 
         <View style={Style.inputContainer}>
             <Text style={Style.label}>Username or E-mail</Text>
-            <TextInput onEndEditing={()=>{dispatch(setUser({email:email,username:email}))
-             console.log(user) 
-            }} onBlur={()=>{dispatch(setUser({email:email,username:email}))
-             console.log(user) 
-        }} placeholder="Enter your e-mail or username" underlineColorAndroid="transparent"  onChangeText={text=>setEmail(text)} value={email}  style={Style.input} />
+            <TextInput placeholder="Enter your e-mail or username" underlineColorAndroid="transparent"  
+            
+            onChangeText={(text)=>{
+            dispatch(setUsermail({email:text}));
+            dispatch(setUsername({username:text}));
+            console.log(user.email);
+            }} 
+        value={user.email}  style={Style.input} />
         </View>
          <View style={Style.inputContainerPass}>
             <View>
          <Text style={Style.label}>Password</Text>
-         <TextInput
-         onEndEditing={()=>{dispatch(setUser({email:email,username:email}))
-         console.log(user) 
-        }
-        
-        }
-         onBlur={()=>{dispatch(setUser({password:password}))
-         console.log(user) 
-            } 
-            
-        } placeholder="Enter your password" secureTextEntry={!showPassword} textContentType="password" style={Style.input} onChangeText={text=>setPassword(text)} value={password}  />
-         </View>
-        
-         <Feather  style={Style.eye}  onPress={toggleShowPassword} name={showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
 
+         <TextInput
+        
+        
+         onChangeText={(text)=>{
+            dispatch(setUserpassword({password:text}))
+            console.log(user.password);
+         }} value={user.password}   
+            
+            placeholder="Enter your password" secureTextEntry={!showPassword} textContentType="password" style={Style.input}  />
+         </View>
+         <TouchableOpacity activeOpacity={1} style={Style.eye}  onPress={toggleShowPassword} >
+         <Feather     name={!showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
+         </TouchableOpacity> 
 
         
 
