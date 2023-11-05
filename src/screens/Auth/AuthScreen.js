@@ -77,7 +77,7 @@ const AuthScreen = ({navigation})=>{
       if(user.valid){
         dispatch(changeValidState())
       }
-      Alert.alert('Error', error.message);
+     // Alert.alert('Error', error.message);
     }
 
   };
