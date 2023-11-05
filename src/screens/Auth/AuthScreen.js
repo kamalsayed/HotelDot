@@ -7,9 +7,9 @@ import LoginScreen from "./LoginScreen";
 import RegisterScreen from "./RegisterScreen";
 import MyButton from "../../components/Button/MyButton";
 import { useSelector, useDispatch } from 'react-redux'
-import { ResetUser } from '../../Redux/userSlice';
+import { ResetUser , changeValidState } from '../../Redux/userSlice';
 import {  createUserWithEmailAndPassword , signInWithEmailAndPassword } from 'firebase/auth';
-import { addDoc ,getDocs,query, collection , where , limit,get} from "firebase/firestore";
+import { addDoc ,getDocs,query, collection , where , limit} from "firebase/firestore";
 
 
 const AuthScreen = ({navigation})=>{
@@ -51,18 +51,35 @@ const AuthScreen = ({navigation})=>{
   //signin -> firebase
   const handleSignIn = async (emailOrUsername, password) => {
     try {
-      
+      let authed;
+      let usernameLogin;
+      let emailLogin;
+      if(emailOrUsername !=='' && password !==''){
       if(emailOrUsername.includes('@')){
-        await signInWithEmailAndPassword(auth,emailOrUsername, password);
+        emailLogin = await signInWithEmailAndPassword(auth,emailOrUsername, password);
       }else{
-        await getDocs(query(collection(database,'users') , where('username', '==', emailOrUsername) , limit(1)));
-      }
+        authed = await getDocs(query(collection(database,'users') , where('username', '==', emailOrUsername) , limit(1)));
+        if(authed.size>0){
+        email =authed.docs[0].data().email;
+        console.log(email);
+        usernameLogin = await signInWithEmailAndPassword(auth,email, password);
+         }
+        }
+      if(usernameLogin || emailLogin){
       Alert.alert('Success', 'Logged in successfully');
       navigation.navigate('Home');
-
+      }else if(user.valid){
+          dispatch(changeValidState())
+        }
+      } //EO --> if
+    
     } catch (error) {
+      if(user.valid){
+        dispatch(changeValidState())
+      }
       Alert.alert('Error', error.message);
     }
+
   };
 
   
@@ -71,7 +88,7 @@ const AuthScreen = ({navigation})=>{
 
 
     return(
-        <SafeAreaView style={{backgroundColor:'#FAFAFA'}}>
+        <SafeAreaView style={Style.AuthScreen}>
 
             <View style={Style.logo}>
             <Logo props={{type:0}} />
@@ -103,13 +120,15 @@ const AuthScreen = ({navigation})=>{
              {/* Here we put the auth content depending on chosen method */}
               {selected ==0 ? <LoginScreen/> : <RegisterScreen />}
              
-            </View>
-            <MyButton  onCallback={ActionAuth} props={{
+              <MyButton  onCallback={ActionAuth} props={{
               
               Action:`${selected == 0 ? 'Login' : 'Sign Up'}`,
               size:"large" 
              
-          }} />
+            }} />
+
+            </View>
+            
 
         </SafeAreaView>
     )

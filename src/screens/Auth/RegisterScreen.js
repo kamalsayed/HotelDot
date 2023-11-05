@@ -1,11 +1,11 @@
-import { Text,View,TextInput,TouchableOpacity } from "react-native";
+import { Text,View,TextInput,TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import MyButton from "../../components/Button/MyButton";
 import { useRef, useState } from "react";
 import Style from "./Style";
 import { Feather } from '@expo/vector-icons';
 import Color from "../../constants/colors";
 import { useSelector, useDispatch } from 'react-redux'
-import { setUsermail, setUsername, setUserpassword} from '../../Redux/userSlice'
+import { setUsermail, setUsername, setUserpassword , changeValidState} from '../../Redux/userSlice'
 import { database } from "./configuration";
 import { getDocs,query, collection , where , limit} from "firebase/firestore";
 
@@ -13,6 +13,8 @@ const RegisterScreen =()=>{
     const user = useSelector((state) => state.users.user);
     const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false); 
+
+    const [usr, setUsr] = useState('');
 
     const usernameRef = useRef(null);
 
@@ -26,9 +28,9 @@ const RegisterScreen =()=>{
 
     //validation states
 
-    const [isUsernameValid,setIsUsernameValid] = useState(true);
-    const [isEmailValid,setIsEmailValid] =useState(true);
-    const [isPasswordValid,setIsPasswordValid] = useState(true);
+    const [isUsernameValid,setIsUsernameValid] = useState();
+    const [isEmailValid,setIsEmailValid] =useState();
+    const [isPasswordValid,setIsPasswordValid] = useState();
 
     //Availablility
 
@@ -53,108 +55,136 @@ const RegisterScreen =()=>{
     const [passwordErr , setPasswordErr]=useState(''); 
 
 
-    const ValidateSignupUsername=async ()=>{ //debug this
+    const ValidateSignupUsername=()=>{ //debug this
     
         const username = usernameRef.current.value;
         
         //username 1- input validation ,  email 1- input validation  , password input validation
- 
-       if(username.length > 0){
-        console.log(usernameRegex.test(username));
-        setIsUsernameValid(usernameRegex.test(username));
-
+       
         
+       if(username){
+        let valid = usernameRegex.test(username);
+        setIsUsernameValid(valid);      
         //username 2- uniqueness validation -> from firebase
-        if(isUsernameValid){
+        if(valid){
           setUsernameErr('');
-          //reset username error msg
-         
-
-          const usernameDb = await getDocs(query(collection(database,'users') , where('username', '==', username) , limit(1)))
-          .then((usernameDb)=>{
-            if(usernameDb.size>0){
-              console.log('dbcall '+usernameDb.docs);
-              setIsUsernameAvail(false);
-              setUsernameErr('Username already in use. Please choose a different username.');
-            }else{
-              setIsUsernameAvail(true);
-              setUsernameErr('');
-            }})
-            .catch((error) => {
-
-            const errorCode = error.code;
-
-            const errorMessage = error.message;
-
-
-            console.error("Signup failed:", errorMessage);
-
-          });
-         }else{
+         }else {
           setUsernameErr('Username must be 3 to 25 characters long and can only contain letters, numbers, and underscores.');
          }
- 
-       
-
       }else{
+        setIsUsernameValid(true);
         setUsernameErr('');
       }
+     
+    }
+
+    const CheckUsernameAvailablity = async ()=>{
+      const username = usernameRef.current.value;
+      if(username.length > 0){
+      const usernameDb = await getDocs(query(collection(database,'users') , where('username', '==', username) , limit(1)))
+      .then((usernameDb)=>{
+        if(usernameDb.size>0){
+          
+          setIsUsernameAvail(false);
+          setUsernameErr('Username already in use. Please choose a different username.');
+        }else{
+          setIsUsernameAvail(true);
+          setUsernameErr('');
+        }})
+        .catch((error) => {
+
+        const errorCode = error.code;
+
+        const errorMessage = error.message;
+
+
+        console.error("Signup failed:", errorMessage);
+
+      });
+    }else{
+      setUsernameErr('');
+    }
     }
   
-    const ValidateSignupEmail = async ()=>{
+    const ValidateSignupEmail =()=>{
 
       const email = emailRef.current.value;
 
-      if(email.length > 0){
+      if(email){
+        let valid = emailRegex.test(email);
         setIsEmailValid(emailRegex.test(email));
 
         
         //email 2- uniqueness validation -> from firebase
-        if(isEmailValid){
+        if(valid){
           setEmailErr('');
-      
           //reset email error msg
 
-          
-          
-          const emailDb = await getDocs(query(collection(database,'users') , where('email', '==', email) , limit(1)))
-          .then((emailDb)=>{
-            if(emailDb){
-
-              setIsEmailAvail(false);
-             setEmailErr('Email already in use. Please choose a different email.');
-            }else{
-
-              setIsEmailAvail(true);
-              setEmailErr('');
-
-            }
-          }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.error("Signup failed:", errorMessage);
-          });
         }else{
           setEmailErr('Please enter a valid email address.');
         }
-
-
     }else{
       setEmailErr('');
+      setIsEmailValid(true);
     }
+  }
+  const CheckEmailAvailablity = async ()=>{
+    const email = emailRef.current.value;
+
+      if(email){
+        const emailDb = await getDocs(query(collection(database,'users') , where('email', '==', email) , limit(1)))
+        .then((emailDb)=>{
+          if(emailDb.size>0){
+
+            setIsEmailAvail(false);
+           setEmailErr('Email already in use. Please choose a different email.');
+          }else{
+
+            setIsEmailAvail(true);
+            setEmailErr('');
+
+          }
+        }).catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error("Signup failed:", errorMessage);
+        });
+
+        
+      }else{
+        setEmailErr('');
+      }
   }
 
   const ValidateSignupPassword = ()=>{
     const password = passwordRef.current.value;
     if(password){
+      const valid =passwordRegex.test(password);
       setIsPasswordValid(passwordRegex.test(password));
 
-      if(isPasswordValid){
+      if(valid){
         setPasswordErr('');
       }else{
-        setPasswordErr('Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@ $ ! % * ? &).');
+        setPasswordErr('Password must be at least 8 characters with 1 lowercase, 1 uppercase, 1 digit, and 1 special character (@ $ ! % * ? &).');
       }
+  }else{
+    setIsPasswordValid(true);
+    setPasswordErr('');
   }
+  }
+
+  const userCheckValid = ()=>{
+    if(user.username && user.email && user.password){
+      if(isEmailValid && isUsernameValid && isPasswordValid && isEmailAvail && isUsernameAvail){
+        if(!user.valid){
+          dispatch(changeValidState());
+        }
+      }else{
+        if(user.valid){
+          dispatch(changeValidState());
+        }
+      }
+    }
   }
 
 
@@ -165,63 +195,73 @@ const RegisterScreen =()=>{
 
 
     return(
+   
         <View style={Style.LoginContainer}>
 
         <View style={Style.inputContainer}>
             <Text style={Style.label}>Username</Text>
             <TextInput
+
             ref={usernameRef}
-            
-            onChangeText={async(text)=>{
+           onEndEditing={()=>{
+            CheckUsernameAvailablity();
+            userCheckValid(); 
+          }}
+            onChangeText={(text)=>{
               usernameRef.current.value = text;
               dispatch(setUsername({username:text}));
-              await ValidateSignupUsername();
-              console.log(user) 
-              }}
-            value={user.username}
+              ValidateSignupUsername();
               
-             
+              }}
+            value={user.username}             
             placeholder="Create your username" underlineColorAndroid="transparent" textContentType="username"    style={Style.inputReg} />
-           {usernameErr ? <Text>{usernameErr}</Text> : null} 
+           {!isUsernameValid || !isUsernameAvail ? <Text style={Style.errorMsg}>{usernameErr}</Text> : <></>} 
         </View>
         <View style={Style.inputContainer}>
             <Text style={Style.label}>E-mail</Text>
             <TextInput      
+              autoCapitalize="none"
+              
               ref={emailRef}
-              onChangeText={async (text)=>{
+              onEndEditing={()=>{
+                CheckEmailAvailablity();
+                userCheckValid(); 
+              }}
+              onChangeText={(text)=>{
               emailRef.current.value = text;
               dispatch(setUsermail({email:text}));
-              await ValidateSignupEmail();
-              console.log(user) 
+              ValidateSignupEmail();
+              userCheckValid();
               }} value={user.email}
             placeholder="Enter your e-mail" underlineColorAndroid="transparent" textContentType="emailAddress"   style={Style.inputReg} />
 
-        {emailErr ? <Text>{emailErr}</Text> : null }
+        {!isEmailAvail || !isEmailValid ? <Text style={Style.errorMsg}>{emailErr}</Text> : null }
         </View>
-         <View style={Style.inputContainerPass}>
-            <View>
+         <View style={!passwordErr? Style.inputContainerPass : Style.inputContainerPassMsg}>
+           <View>
          <Text style={Style.label}>Password</Text>
          <TextInput        
           ref={passwordRef}
+          onEndEditing={userCheckValid()}
           onChangeText={(text)=>{
             passwordRef.current.value=text;
             dispatch(setUserpassword({password:text}));
             ValidateSignupPassword();
-            console.log(user) 
           }} 
           value={user.password} 
          placeholder="Create your password"   secureTextEntry={!showPassword} textContentType="password" style={Style.inputReg} />
 
-        {passwordErr ? <Text>{passwordErr}</Text> : <></>} 
+        {!isPasswordValid ? <Text style={Style.errorMsg}>{passwordErr}</Text> : <></>} 
          </View>
         
-         <TouchableOpacity activeOpacity={1} style={Style.eye}  onPress={toggleShowPassword} >
+         <TouchableOpacity activeOpacity={1} style={!passwordErr?Style.eye:Style.eyeErr}  onPress={toggleShowPassword} >
          <Feather     name={!showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
          </TouchableOpacity> 
 
         </View>
 
         </View>
+       
     );
 }
 

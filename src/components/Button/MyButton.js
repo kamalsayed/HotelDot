@@ -17,7 +17,7 @@ const MyButton = ({props,onCallback})=>{
     return(
     <>
     <TouchableOpacity activeOpacity={1} style={size ==='small' ? Style.button : Style.buttonL} onPress={()=>{
-        if(user.username !== ''){
+        if(user.valid){
             if(user.username == user.email){
                 onCallback(user,0);
             }else{

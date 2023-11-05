@@ -5,6 +5,7 @@ const initialState = {
     username:'',
     email:'',
     password:'',
+    valid:false,
     }
 }
 
@@ -33,17 +34,21 @@ export const userSlice = createSlice({
       state.user.password='';
      }
     },
+    changeValidState:(state)=>{
+      state.user.valid = !state.user.valid;
+    },
 
     
     ResetUser:(state)=>{
         state.user.username ='';
         state.user.email = '';
         state.user.password ='';
+        state.user.valid=false;
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setUsermail, setUsername, setUserpassword ,ResetUser } = userSlice.actions
+export const { setUsermail, setUsername, setUserpassword ,ResetUser , changeValidState } = userSlice.actions
 
 export default userSlice.reducer

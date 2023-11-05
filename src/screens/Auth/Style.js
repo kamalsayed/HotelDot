@@ -51,8 +51,13 @@ const Style = StyleSheet.create({
         fontSize:18,
         lineHeight:28,
     },
+    AuthScreen:{
+        backgroundColor:'#FAFAFA',
+        flex:1,
+    },
     //// Login Style
     AuthContainer:{
+        
         flexDirection:'column',
         marginHorizontal:'8%',
         marginTop:'1%',
@@ -81,18 +86,40 @@ const Style = StyleSheet.create({
         zIndex:1000,
         position:'absolute',
         right:'5%',
+        top:'55%'
+    },
+    eyeL:{
+        zIndex:1000,
+        position:'absolute',
+        right:'5%',
         top:'60%'
+    }
+    ,
+    eyeErr:{
+        zIndex:1000,
+        position:'absolute',
+        right:'5%',
+        top:'50%'
+    },
+    eyeErr:{
+        zIndex:1000,
+        position:'absolute',
+        right:'5%',
+        top:'53%'
     },
     inputContainerPass:{
-       
-       // flexDirection:'row',
-       // justifyContent:'space-between',
         alignContent:'center',
         marginBottom:'12%',
         overflow:'hidden',
         width:'100%',
-        
-        
+ 
+    },
+    inputContainerPassMsg:{
+        alignContent:'center',
+        marginBottom:'3%',
+        overflow:'hidden',
+        width:'100%',
+ 
     },
     label:{
         fontSize:16,
@@ -100,7 +127,6 @@ const Style = StyleSheet.create({
         fontWeight:'600',
         lineHeight:22,
         marginBottom:'6%',
-        
         color:`${Color.dark}`
     },
     input:{
@@ -122,6 +148,7 @@ const Style = StyleSheet.create({
         textAlign:'left',    
     },
     inputReg:{
+        
         paddingHorizontal:'8%',
         width:'100%',
         paddingVertical:15,
@@ -138,9 +165,11 @@ const Style = StyleSheet.create({
         shadowOpacity:0.1,
         shadowRadius:75,
         textAlign:'left',    
+        
     },
     questionContainer:{
         alignSelf:'flex-end',
+        marginBottom:'5%',
     },
     questionBtn:{
 
@@ -152,6 +181,13 @@ const Style = StyleSheet.create({
         lineHeight:25,
         color:`${Color.lightdark}`,
     },
+    errorMsg:{
+        fontSize:10,
+        fontFamily:'NunitoSans_400Regular',
+        fontWeight:'100',
+        lineHeight:13,
+        color:`${Color.error}`,
+    }
 });
 
 export default Style;
