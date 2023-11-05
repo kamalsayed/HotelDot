@@ -32,7 +32,7 @@ const OnboardingScreen = ({navigation})=>{
         </View>
 
             <View style={Style.btn}>
-           <MyButton  props={{Action:"Next",size:"small",onCallback:go}} />
+           <MyButton onCallback={go}  props={{Action:"Next",size:"small"}} />
            </View>
            </SafeAreaView>
         </>

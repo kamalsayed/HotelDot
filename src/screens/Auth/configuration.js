@@ -1,6 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import {getAuth} from "firebase/auth";
-import {getFirestore} from "firebase/firestore";
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { AppRegistry } from 'react-native';
+import App from '../../../App';
+import { name as appName } from '../../../app.json';
+
 
 const firebaseConfig = {
 
@@ -25,5 +29,8 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-const db = getFirestore(app);
-export {app , auth , db};
+const database = getFirestore(app);
+
+AppRegistry.registerComponent(appName, () => App);
+
+export  {app , auth , database};
