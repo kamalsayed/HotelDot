@@ -7,7 +7,7 @@ import LoginScreen from "./LoginScreen";
 import RegisterScreen from "./RegisterScreen";
 import MyButton from "../../components/Button/MyButton";
 import { useSelector, useDispatch } from 'react-redux'
-import { ResetUser , changeValidState } from '../../Redux/userSlice';
+import { ResetUser , changeValidState , setUsername , setUsermail  } from '../../Redux/userSlice';
 import {  createUserWithEmailAndPassword , signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc ,getDocs,query, collection , where , limit} from "firebase/firestore";
 
@@ -54,26 +54,50 @@ const AuthScreen = ({navigation})=>{
       let authed;
       let usernameLogin;
       let emailLogin;
+      let email;
+      let username;
       if(emailOrUsername !=='' && password !==''){
+
       if(emailOrUsername.includes('@')){
+
+        authed = await getDocs(query(collection(database,'users') , where('email', '==', emailOrUsername) , limit(1)));
+        username = authed.docs[0].data().username
+        dispatch(setUsername({username:username}));
+        
+        
+        
         emailLogin = await signInWithEmailAndPassword(auth,emailOrUsername, password);
+
+        
+        
+        
+        
       }else{
+
         authed = await getDocs(query(collection(database,'users') , where('username', '==', emailOrUsername) , limit(1)));
+
         if(authed.size>0){
+
         email =authed.docs[0].data().email;
-        console.log(email);
+        
+       
+        
         usernameLogin = await signInWithEmailAndPassword(auth,email, password);
+        dispatch(setUsermail({email:email}));
          }
         }
       if(usernameLogin || emailLogin){
+      
+
       Alert.alert('Success', 'Logged in successfully');
+      
       navigation.navigate('Home');
       }else if(user.valid){
           dispatch(changeValidState())
         }
       } //EO --> if
-    
-    } catch (error) {
+     }//EOT 
+     catch (error) {
       if(user.valid){
         dispatch(changeValidState())
       }

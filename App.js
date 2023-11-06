@@ -38,17 +38,34 @@ export default function App() {
 
       {splash ?  <CustomSplashScreen /> 
      :  <>
-      <NavigationContainer >
-      <Stack.Navigator>
+      <NavigationContainer  fallback={false}   >
+      <Stack.Navigator   screenOptions={{
+        gestureEnabled:false,
+        
+      }}>
+
+      <Stack.Group>
         <Stack.Screen options={{
           headerShown:false,
+          gestureEnabled:false,
         }} name="Onboarding" component={OnboardingScreen} />
+
         <Stack.Screen options={{
           headerShown:false,
-        }} name="Auth" component={AuthScreen} />
-        <Stack.Screen options={{
+          gestureEnabled:false,
+        }} name="Auth"
+        component={AuthScreen} />
+        </Stack.Group>
+
+      <Stack.Group  initialRouteName='Home'>
+        <Stack.Screen  options={{
           headerShown:false,
+          gestureEnabled:false,
+          
+
         }} name="Home" component={HomeScreen} />
+      </Stack.Group>
+
       </Stack.Navigator>
      </NavigationContainer>
 
