@@ -36,3 +36,5 @@ yarn-error.*
 
 #firebase configurations file
 ./src/screens/Auth/configurations.js
+
+configurations.*
