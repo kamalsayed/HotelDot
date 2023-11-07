@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { ResetUser , changeValidState , setUsername , setUsermail  } from '../../Redux/userSlice';
 import {  createUserWithEmailAndPassword , signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc ,getDocs,query, collection , where , limit} from "firebase/firestore";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthScreen = ({navigation})=>{
 
@@ -61,7 +61,7 @@ const AuthScreen = ({navigation})=>{
       if(emailOrUsername.includes('@')){
 
         authed = await getDocs(query(collection(database,'users') , where('email', '==', emailOrUsername) , limit(1)));
-        username = authed.docs[0].data().username
+        username = authed.docs[0].data().username;
         dispatch(setUsername({username:username}));
         
         
@@ -69,8 +69,10 @@ const AuthScreen = ({navigation})=>{
         emailLogin = await signInWithEmailAndPassword(auth,emailOrUsername, password);
 
         
-        
-        
+
+        let usr= AsyncStorage.getItem('name');
+
+        console.log('async username : ' + usr);
         
       }else{
 
@@ -80,24 +82,45 @@ const AuthScreen = ({navigation})=>{
 
         email =authed.docs[0].data().email;
         
-       
+        console.log(email)
+        console.log(password)
+        
         
         usernameLogin = await signInWithEmailAndPassword(auth,email, password);
         dispatch(setUsermail({email:email}));
+        console.log(user);
          }
         }
       if(usernameLogin || emailLogin){
-      
+       
 
       Alert.alert('Success', 'Logged in successfully');
       
+      if(usernameLogin){
+
+      await AsyncStorage.multiSet([
+      ['mail', email],
+      ['name', emailOrUsername],
+      ['password',password]
+      ]);
+    
+    }else if(emailLogin){
+
+        await AsyncStorage.multiSet([
+          ['mail', emailOrUsername], 
+          ['name', username],
+          ['password',password]
+        ]);
+      }
       navigation.navigate('Home');
-      }else if(user.valid){
+      }else{
+          if(user.valid)
           dispatch(changeValidState())
         }
       } //EO --> if
      }//EOT 
      catch (error) {
+      console.log(error)
       if(user.valid){
         dispatch(changeValidState())
       }

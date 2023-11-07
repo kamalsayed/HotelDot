@@ -6,7 +6,10 @@ import Color from "../../constants/colors";
 import { useEffect, useState } from "react";
 import HotelCard from "../../components/HotelCard/HotelCard";
 import { ImgPath } from "../../constants/images";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { auth } from "../Auth/configuration";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { setUsermail, setUsername, setUserpassword } from "../../Redux/userSlice";
 
 const HomeScreen = ({navigation})=>{
 
@@ -14,23 +17,24 @@ const HomeScreen = ({navigation})=>{
     const user = useSelector((state) => state.users.user);
     const dispatch = useDispatch();
     const [selected,setSelected]=useState(0);
+    const [name,setName]=useState('');
 
     const HotelsDummy = [
-        {id : 0 , hotelName: 'Tropicasa De Hotel' , location : 'Amsterdam, Netherlands' , rate : '4.6' , imgUrl :`${ImgPath.hotelImage2}` }
+        {id : 0 , hotelName: 'Tropicasa De Hotel' , location : 'Amsterdam, Netherlands' , rate : '4.6' , imgUrl :ImgPath.hotelImage2 ,details_1:"Tropicasa De Hotel is high rated hotels with 1000+ reviews and we are always maintaning the quality for better rating and high attitude service for you." , details_2:"Tropicasa De Hotel located in a strategic location, only 6 Km from the airport and 1 Km from the train station. The hotel located in the middle of the city so you can enjoy the city and see something nearby." , details_3 :"You will be welcomed amongst olive trees, citron trees and magnolias, in gardens that hide exotic plants and in a wonderful outdoor pool with deck chairs.",reviews:"1763"}
         ,
-        {id : 1 , hotelName: 'Luxe Hotel' , location : 'Jakarta, Indonesia' , rate : '4.3' , imgUrl :`${ImgPath.hotelImage1}` }
+        {id : 1 , hotelName: 'Luxe Hotel' , location : 'Jakarta, Indonesia' , rate : '4.3' , imgUrl :ImgPath.hotelImage1 , details_1:"Tropicasa De Hotel is high rated hotels with 1000+ reviews and we are always maintaning the quality for better rating and high attitude service for you." , details_2:"Tropicasa De Hotel located in a strategic location, only 6 Km from the airport and 1 Km from the train station. The hotel located in the middle of the city so you can enjoy the city and see something nearby." , details_3 :"You will be welcomed amongst olive trees, citron trees and magnolias, in gardens that hide exotic plants and in a wonderful outdoor pool with deck chairs.",reviews:"1765"}
         ,
-        {id : 2 , hotelName: 'Tropicasa De Hotel' , location : 'Amsterdam, Netherlands' , rate : '4.6' , imgUrl :`${ImgPath.hotelImage2}` }
+        {id : 2 , hotelName: 'Tropicasa De Hotel' , location : 'Amsterdam, Netherlands' , rate : '4.6' , imgUrl :ImgPath.hotelImage2 , details_1:"Tropicasa De Hotel is high rated hotels with 1000+ reviews and we are always maintaning the quality for better rating and high attitude service for you." , details_2:"Tropicasa De Hotel located in a strategic location, only 6 Km from the airport and 1 Km from the train station. The hotel located in the middle of the city so you can enjoy the city and see something nearby." , details_3 :"You will be welcomed amongst olive trees, citron trees and magnolias, in gardens that hide exotic plants and in a wonderful outdoor pool with deck chairs.",reviews:"1502"}
         ,
-        {id : 3 , hotelName: 'Luxe Hotel' , location : 'Jakarta, Indonesia' , rate : '4.3' , imgUrl :`${ImgPath.hotelImage1}` }
+        {id : 3 , hotelName: 'Luxe Hotel' , location : 'Jakarta, Indonesia' , rate : '4.3' , imgUrl :ImgPath.hotelImage1 , details_1:"Tropicasa De Hotel is high rated hotels with 1000+ reviews and we are always maintaning the quality for better rating and high attitude service for you." , details_2:"Tropicasa De Hotel located in a strategic location, only 6 Km from the airport and 1 Km from the train station. The hotel located in the middle of the city so you can enjoy the city and see something nearby." , details_3 :"You will be welcomed amongst olive trees, citron trees and magnolias, in gardens that hide exotic plants and in a wonderful outdoor pool with deck chairs.",reviews:"1302"}
         ,
-        {id : 4 , hotelName: 'Tropicasa De Hotel' , location : 'Amsterdam, Netherlands' , rate : '4.6' , imgUrl :`${ImgPath.hotelImage2}` }
+        {id : 4 , hotelName: 'Tropicasa De Hotel' , location : 'Amsterdam, Netherlands' , rate : '4.6' , imgUrl :ImgPath.hotelImage2 , details_1:"Tropicasa De Hotel is high rated hotels with 1000+ reviews and we are always maintaning the quality for better rating and high attitude service for you." , details_2:"Tropicasa De Hotel located in a strategic location, only 6 Km from the airport and 1 Km from the train station. The hotel located in the middle of the city so you can enjoy the city and see something nearby." , details_3 :"You will be welcomed amongst olive trees, citron trees and magnolias, in gardens that hide exotic plants and in a wonderful outdoor pool with deck chairs.",reviews:"2210"}
         ,
-        {id : 5 , hotelName: 'Luxe Hotel' , location : 'Jakarta, Indonesia' , rate : '4.3' , imgUrl :`${ImgPath.hotelImage1}` }
+        {id : 5 , hotelName: 'Luxe Hotel' , location : 'Jakarta, Indonesia' , rate : '4.3' , imgUrl :ImgPath.hotelImage1 , details_1:"Tropicasa De Hotel is high rated hotels with 1000+ reviews and we are always maintaning the quality for better rating and high attitude service for you." , details_2:"Tropicasa De Hotel located in a strategic location, only 6 Km from the airport and 1 Km from the train station. The hotel located in the middle of the city so you can enjoy the city and see something nearby." , details_3 :"You will be welcomed amongst olive trees, citron trees and magnolias, in gardens that hide exotic plants and in a wonderful outdoor pool with deck chairs.",reviews:"7832"}
         ,
-        {id : 6 , hotelName: 'Tropicasa De Hotel' , location : 'Amsterdam, Netherlands' , rate : '4.6' , imgUrl :`${ImgPath.hotelImage2}` }
+        {id : 6 , hotelName: 'Tropicasa De Hotel' , location : 'Amsterdam, Netherlands' , rate : '4.6' , imgUrl :ImgPath.hotelImage2 , details_1:"Tropicasa De Hotel is high rated hotels with 1000+ reviews and we are always maintaning the quality for better rating and high attitude service for you." , details_2:"Tropicasa De Hotel located in a strategic location, only 6 Km from the airport and 1 Km from the train station. The hotel located in the middle of the city so you can enjoy the city and see something nearby." , details_3 :"You will be welcomed amongst olive trees, citron trees and magnolias, in gardens that hide exotic plants and in a wonderful outdoor pool with deck chairs.",reviews:"1532"}
         ,
-        {id : 7 , hotelName: 'Luxe Hotel' , location : 'Jakarta, Indonesia' , rate : '4.3' , imgUrl :`${ImgPath.hotelImage1}` }
+        {id : 7 , hotelName: 'Luxe Hotel' , location : 'Jakarta, Indonesia' , rate : '4.3' , imgUrl :ImgPath.hotelImage1 , details_1:"Tropicasa De Hotel is high rated hotels with 1000+ reviews and we are always maintaning the quality for better rating and high attitude service for you." , details_2:"Tropicasa De Hotel located in a strategic location, only 6 Km from the airport and 1 Km from the train station. The hotel located in the middle of the city so you can enjoy the city and see something nearby." , details_3 :"You will be welcomed amongst olive trees, citron trees and magnolias, in gardens that hide exotic plants and in a wonderful outdoor pool with deck chairs.",reviews:"3333"}
     ]
 
     useEffect(() => {
@@ -46,7 +50,38 @@ const HomeScreen = ({navigation})=>{
         } else {
         setGreeting('Good Night');
         }
+
+    
   }, []);
+
+    useEffect(()=>{
+        const checkUser =async()=>{
+            if(user.email?.length == 0){
+            const [mail,name,password] = await AsyncStorage.multiGet(['mail','name','password']);
+           
+           
+            setName(name[1]);
+            try{
+            const usernameLogin = await signInWithEmailAndPassword(auth,mail[1], password[1]);
+            dispatch(setUsermail({email:mail[1]}));
+                dispatch(setUsername({username:name[1]}));
+                dispatch(setUserpassword({password:password[1]}));
+            }catch(error){
+                console.log(error)
+            }            
+            
+        }
+        
+    }
+
+        checkUser();
+     
+        
+
+    },[]);
+
+
+
 
     return(
         <SafeAreaView style={Style.ScreenContainerSafe} >
@@ -60,7 +95,7 @@ const HomeScreen = ({navigation})=>{
 
         <View style={Style.Greeting}>
             {/* Greeting Section */}
-            <Text numberOfLines={2} ellipsizeMode="tail" style={Style.GreetingMsg}>{greeting}, {user.username}!</Text>
+            <Text numberOfLines={2} ellipsizeMode="tail" style={Style.GreetingMsg}>{greeting}, {name}!</Text>
         </View>
 
         <View style={Style.categoriesContainer}>
@@ -103,12 +138,23 @@ const HomeScreen = ({navigation})=>{
         <View style={Style.Hotels}>
             <FlatList
             data={HotelsDummy}
-            renderItem={({item})=>(<HotelCard name={item.hotelName} location={item.location} rate={item.rate} image={item.imgUrl} />)}
+            renderItem={({item})=>(
+            
+            <HotelCard  name={item.hotelName} 
+                        location={item.location} 
+                        rate={item.rate} 
+                        image={item.imgUrl}  
+                        navigation={navigation} 
+                        details = {{d1 :item.details_1 , d2: item.details_2 , d3 : item.details_3}}
+                        totalReview ={item.reviews}
+                        />
+          
+            )}
             keyExtractor={(item)=>item.id}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             alwaysBounceHorizontal={true}
-
+            initialNumToRender={2}
             />   
         </View>
 
