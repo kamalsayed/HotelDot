@@ -2,13 +2,20 @@ import { Text,Image,View,SafeAreaView } from "react-native";
 import { ImgPath } from "../../constants/images";
 import MyButton from "../../components/Button/MyButton";
 import Style from "./Style";
-import { useCallback } from "react";
-
+import { useCallback, useEffect } from "react";
+import { ResetUser } from "../../Redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const OnboardingScreen = ({navigation})=>{
+    const user = useSelector((state) => state.users.user);
+    const dispatch = useDispatch();
 
     const go = useCallback(()=>{
         navigation.navigate('Auth');
+    },[]);
+
+    useEffect(()=>{
+        dispatch(ResetUser());
     },[]);
 
     return(

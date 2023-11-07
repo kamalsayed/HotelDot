@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { AppState, StyleSheet, Text, View } from 'react-native';
 import OnboardingScreen from './src/screens/Onboarding/OnboardingScreen';
 import { useEffect, useState } from 'react';
 import CustomSplashScreen from './src/screens/Splash/SplashScreen';
@@ -13,6 +13,7 @@ import HomeScreen from './src/screens/Home/HomeScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DetailsScreen from './src/screens/Details/Details';
 import Color from './src/constants/colors';
+import { auth } from './src/screens/Auth/configuration';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,12 +21,28 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
 
+  const [appState, setAppState] = useState(AppState.currentState);
  
   const [splash , setSplash] = useState(true);
  
   const fontsLoaded = loadFonts();
 
-  const [user, setUser] = useState(null);
+  const [user, userStateChange] = useState(null);
+
+
+  const handleAppStateChange = (nextAppState) => {
+    if (appState.match(/inactive|background/) && nextAppState === 'active') {
+      userStateChange(null);
+    } else if (appState === 'active' && nextAppState.match(/inactive|background/)) {
+      AsyncStorage.clear(); 
+    }
+    
+    setAppState(nextAppState);
+
+    
+};
+
+   
   
   useEffect(()=>{
     setTimeout(async ()=>{
@@ -33,21 +50,37 @@ export default function App() {
     },3000);
     
   },[])
+
+  useEffect(() => {
     
+    const unsubscribe = auth.onAuthStateChanged((authenticatedUser) => {
+      userStateChange(authenticatedUser);
+      
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
+
   useEffect(()=>{
-    
     const checkCurrentUser = async () => {
       const userToken = await AsyncStorage.getItem('name');
+      
       if(userToken){
-      setUser(userToken)
-     
-      };
+        userStateChange(userToken) 
+      }
     };
-
+    
     checkCurrentUser();
-
    
   },[]);
+
+    
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange);    
+  }, [appState]);
+
     
 
     
@@ -64,7 +97,10 @@ export default function App() {
       <Stack.Navigator   screenOptions={{
         gestureEnabled:false,
       }}>
-      {!user ?  <Stack.Group>
+
+      {!user ? 
+
+       <Stack.Group>
         <Stack.Screen options={{
           headerShown:false,
           gestureEnabled:false,
@@ -75,11 +111,8 @@ export default function App() {
           gestureEnabled:false,
         }} name="Auth"
         component={AuthScreen} />
-        </Stack.Group> :
 
-         <Stack.Group  initialRouteName='Home'>
-
-         <Stack.Screen  options={{
+      {/*   <Stack.Screen  options={{
            headerShown:false,
            gestureEnabled:false,
            
@@ -100,6 +133,34 @@ export default function App() {
           
           
  
+         }} name="Description" component={DetailsScreen} />
+        
+ */}
+
+        </Stack.Group> 
+        
+        
+        
+        :
+
+         <Stack.Group  initialRouteName='Home'>
+
+         <Stack.Screen  options={{
+           headerShown:false,
+           gestureEnabled:false,
+         }} name="Home" component={HomeScreen} />
+
+        <Stack.Screen  options={{
+           headerShown:true,
+           headerBackground: () => (
+            <View style={{ backgroundColor: `${Color.screen}`, flex: 1  }} />
+          ),
+          headerTitleStyle:{
+              fontFamily:'NunitoSans_400Regular',
+              fontSize:25,
+              fontWeight: '700', // Adjust the font weight as needed           
+              color:`${Color.dark}`
+          },
          }} name="Description" component={DetailsScreen} />
 
        </Stack.Group>

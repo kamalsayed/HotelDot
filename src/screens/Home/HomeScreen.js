@@ -56,20 +56,26 @@ const HomeScreen = ({navigation})=>{
 
     useEffect(()=>{
         const checkUser =async()=>{
-            if(user.email?.length == 0){
+
+            if(user.email.length == 0){
             const [mail,name,password] = await AsyncStorage.multiGet(['mail','name','password']);
            
-           
+           console.log(name[1]);
+            
             setName(name[1]);
-            try{
-            const usernameLogin = await signInWithEmailAndPassword(auth,mail[1], password[1]);
-            dispatch(setUsermail({email:mail[1]}));
+            
+            if(user.email==='') {
+               const usernameLogin = await signInWithEmailAndPassword(auth,mail[1], password[1]);
+
+               if(usernameLogin){
+                dispatch(setUsermail({email:mail[1]}));
                 dispatch(setUsername({username:name[1]}));
                 dispatch(setUserpassword({password:password[1]}));
-            }catch(error){
-                console.log(error)
-            }            
+               }
+            }
             
+        }else if (user.email){
+            setName(user.username)
         }
         
     }
@@ -78,7 +84,7 @@ const HomeScreen = ({navigation})=>{
      
         
 
-    },[]);
+},[]);
 
 
 
@@ -88,9 +94,13 @@ const HomeScreen = ({navigation})=>{
 
         <View style={Style.ScreenContainer}>
             
-            <View style={Style.Iconstyle}> 
+            <View  style={Style.Iconstyle}> 
                 {/* Icon section */}
+            <TouchableOpacity onPress={()=>{
+                auth.signOut();
+            }}>
             <Feather name="award" size={24} color={Color.grey} />
+            </TouchableOpacity>
             </View>  
 
         <View style={Style.Greeting}>

@@ -14,7 +14,7 @@ const Style = StyleSheet.create({
         flexDirection:'row',
         backgroundColor:`${Color.white}`,
         height:66,
-        marginVertical:'10%',
+       // marginVertical:'10%',
         alignItems:'center',
         
     },
@@ -54,6 +54,7 @@ const Style = StyleSheet.create({
     AuthScreen:{
         backgroundColor:'#FAFAFA',
         flex:1,
+        
     },
     //// Login Style
     AuthContainer:{
@@ -63,12 +64,15 @@ const Style = StyleSheet.create({
         marginTop:'1%',
         marginBottom:'10%',
         overflow:'hidden',
-        width:'85%'
+        width:'85%',
+        height:'100%',
     },
     LoginContainer:{
+        paddingTop:'10%',
         justifyContent:'space-between',
         alignContent:'center',
         alignItems:'flex-start',
+      
         
     },
     inputContainer:{
@@ -85,28 +89,14 @@ const Style = StyleSheet.create({
     eye:{
         zIndex:1000,
         position:'absolute',
-        right:'5%',
-        top:'55%'
+        alignSelf:'center',
+        end:'5%',
+   
     },
-    eyeL:{
-        zIndex:1000,
-        position:'absolute',
-        right:'5%',
-        top:'60%'
-    }
-    ,
-    eyeErr:{
-        zIndex:1000,
-        position:'absolute',
-        right:'5%',
-        top:'50%'
-    },
-    eyeErr:{
-        zIndex:1000,
-        position:'absolute',
-        right:'5%',
-        top:'53%'
-    },
+   passEye:{
+    flexDirection:'row',
+    justifyContent:'space-between'
+   },
     inputContainerPass:{
         alignContent:'center',
         marginBottom:'12%',
@@ -188,6 +178,29 @@ const Style = StyleSheet.create({
         lineHeight:13,
         color:`${Color.error}`,
     }
+
+    ,
+
+    inputReg2:{
+        flex:1,
+        paddingHorizontal:'8%',
+        width:'100%',
+        paddingVertical:15,
+        borderRadius:25,
+        overflow:'hidden',
+        backgroundColor:`${Color.white}`,
+        color:`${Color.dark}`,
+        fontFamily:'NunitoSans_400Regular',
+        fontWeight:"600",
+        fontSize:14,
+        lineHeight:22,
+        shadowColor:'#939393',
+        shadowOffset:{width:0,height:10},
+        shadowOpacity:0.1,
+        shadowRadius:75,
+        textAlign:'left',    
+        
+    },
 });
 
 export default Style;

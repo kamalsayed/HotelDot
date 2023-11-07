@@ -22,7 +22,8 @@ export const Style = StyleSheet.create({
     },
     imgLoginContainer:{
         borderRadius:5,
-        backgroundColor:`${Color.success}`
+        backgroundColor:`${Color.success}`,
+        marginBottom:'10%',
     }
 
 });

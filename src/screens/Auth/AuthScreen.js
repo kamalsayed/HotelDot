@@ -1,4 +1,4 @@
-import { Text,Image,View,SafeAreaView ,Alert, Touchable, TouchableOpacity} from "react-native";
+import { Text,Image,View,SafeAreaView ,Alert, Modal , ActivityIndicator, TouchableOpacity, ScrollView} from "react-native";
 import Logo from "../../components/Logo/Logo";
 import Style from "./Style";
 import { auth ,database } from "./configuration";
@@ -11,13 +11,17 @@ import { ResetUser , changeValidState , setUsername , setUsermail  } from '../..
 import {  createUserWithEmailAndPassword , signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc ,getDocs,query, collection , where , limit} from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Color from "../../constants/colors";
 
 const AuthScreen = ({navigation})=>{
 
   const user = useSelector((state) => state.users.user);
-  const dispatch = useDispatch();
-  const [selected,SetSelected]=useState(0);
 
+  const dispatch = useDispatch();
+
+  const [selected,SetSelected]=useState(0); //0 login , 1 sign up
+
+  const [loading , setLoading] =useState(false);
 
 
 
@@ -34,16 +38,18 @@ const AuthScreen = ({navigation})=>{
   //signup -> firebase
   const handleSignUp = async (email, password, username) => {
     try {
+      setLoading(true); //start process
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const docRef = await addDoc(collection(database, 'users'), {
         username,
         email,
       });
-
+      setLoading(false); //end process
       Alert.alert('Success', 'Account created successfully');
       dispatch(ResetUser());
       SetSelected(0);
     } catch (error) {
+      setLoading(false); //end process
       Alert.alert('Error', error.message);
     }
   };
@@ -60,8 +66,14 @@ const AuthScreen = ({navigation})=>{
 
       if(emailOrUsername.includes('@')){
 
+        setLoading(true); //start process
+
         authed = await getDocs(query(collection(database,'users') , where('email', '==', emailOrUsername) , limit(1)));
+       
+        if(authed){
+          
         username = authed.docs[0].data().username;
+        
         dispatch(setUsername({username:username}));
         
         
@@ -70,11 +82,12 @@ const AuthScreen = ({navigation})=>{
 
         
 
-        let usr= AsyncStorage.getItem('name');
-
-        console.log('async username : ' + usr);
+       
+        }
         
       }else{
+
+        setLoading(true); //start process
 
         authed = await getDocs(query(collection(database,'users') , where('username', '==', emailOrUsername) , limit(1)));
 
@@ -82,45 +95,49 @@ const AuthScreen = ({navigation})=>{
 
         email =authed.docs[0].data().email;
         
-        console.log(email)
-        console.log(password)
+      
         
         
         usernameLogin = await signInWithEmailAndPassword(auth,email, password);
         dispatch(setUsermail({email:email}));
-        console.log(user);
+       
          }
         }
       if(usernameLogin || emailLogin){
-       
 
-      Alert.alert('Success', 'Logged in successfully');
-      
-      if(usernameLogin){
+        if(usernameLogin){
 
-      await AsyncStorage.multiSet([
-      ['mail', email],
-      ['name', emailOrUsername],
-      ['password',password]
-      ]);
-    
-    }else if(emailLogin){
-
-        await AsyncStorage.multiSet([
-          ['mail', emailOrUsername], 
-          ['name', username],
+          await AsyncStorage.multiSet([
+          ['mail', email],
+          ['name', emailOrUsername],
           ['password',password]
-        ]);
-      }
+          ]);
+        
+        }else if(emailLogin){
+    
+          await AsyncStorage.multiSet([
+            ['mail', emailOrUsername], 
+            ['name', username],
+            ['password',password]
+            ]);
+          }
+    
+      setLoading(false);
+      Alert.alert('Success', 'Logged in successfully');
+
       navigation.navigate('Home');
+
       }else{
-          if(user.valid)
-          dispatch(changeValidState())
+          if(user.valid){
+          dispatch(changeValidState());
+          setLoading(false);
+          }
         }
       } //EO --> if
      }//EOT 
      catch (error) {
       console.log(error)
+      setLoading(false);
       if(user.valid){
         dispatch(changeValidState())
       }
@@ -136,7 +153,7 @@ const AuthScreen = ({navigation})=>{
 
     return(
         <SafeAreaView style={Style.AuthScreen}>
-
+            
             <View style={Style.logo}>
             <Logo props={{type:0}} />
             </View>
@@ -145,6 +162,9 @@ const AuthScreen = ({navigation})=>{
               <TouchableOpacity activeOpacity={1} onPress={()=>{
                 if(selected===1){
                   dispatch(ResetUser());
+                  if(!user.valid){
+                  dispatch(changeValidState())
+                  }
                   SetSelected(0)
                 }
               
@@ -152,6 +172,7 @@ const AuthScreen = ({navigation})=>{
               }} style={selected ==0 ? Style.AuthSelect : Style.AuthNoSelect}>
               <Text style={selected ==0 ? Style.selected : Style.notSelect}>Log In</Text>
               </TouchableOpacity>
+
                <TouchableOpacity activeOpacity={1} onPress={()=>{
                  if(selected===0){
                   dispatch(ResetUser());
@@ -162,8 +183,9 @@ const AuthScreen = ({navigation})=>{
                </TouchableOpacity>
                 
             </View>
-
+            <ScrollView showsVerticalScrollIndicator={false} scrollToOverflowEnabled={false}>
             <View style={Style.AuthContainer}>
+             
              {/* Here we put the auth content depending on chosen method */}
               {selected ==0 ? <LoginScreen/> : <RegisterScreen />}
              
@@ -175,8 +197,16 @@ const AuthScreen = ({navigation})=>{
             }} />
 
             </View>
+            </ScrollView>
             
-
+           
+            <Modal transparent={true} animationType="fade"   visible={loading}>
+            <View style={{position:'absolute',alignSelf:'center',top:'45%' , backgroundColor:`${Color.lightdark}`, padding:30,borderRadius:25,}}>
+            <ActivityIndicator size={"large"}  /> 
+            </View>
+            </Modal>
+           
+            
         </SafeAreaView>
     )
 }

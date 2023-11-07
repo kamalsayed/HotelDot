@@ -14,7 +14,7 @@ const RegisterScreen =()=>{
     const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false); 
 
-    const [usr, setUsr] = useState('');
+    //const [usr, setUsr] = useState('');
 
     const usernameRef = useRef(null);
 
@@ -80,7 +80,7 @@ const RegisterScreen =()=>{
 
     const CheckUsernameAvailablity = async ()=>{
       const username = usernameRef.current.value;
-      if(username.length > 0){
+      if(username){
       const usernameDb = await getDocs(query(collection(database,'users') , where('username', '==', username) , limit(1)))
       .then((usernameDb)=>{
         if(usernameDb.size>0){
@@ -160,7 +160,7 @@ const RegisterScreen =()=>{
     const password = passwordRef.current.value;
     if(password){
       const valid =passwordRegex.test(password);
-      setIsPasswordValid(passwordRegex.test(password));
+      setIsPasswordValid(valid);
 
       if(valid){
         setPasswordErr('');
@@ -195,7 +195,7 @@ const RegisterScreen =()=>{
 
 
     return(
-   
+        
         <View style={Style.LoginContainer}>
 
         <View style={Style.inputContainer}>
@@ -217,6 +217,7 @@ const RegisterScreen =()=>{
             placeholder="Create your username" underlineColorAndroid="transparent" textContentType="username"    style={Style.inputReg} />
            {!isUsernameValid || !isUsernameAvail ? <Text style={Style.errorMsg}>{usernameErr}</Text> : <></>} 
         </View>
+        
         <View style={Style.inputContainer}>
             <Text style={Style.label}>E-mail</Text>
             <TextInput      
@@ -238,25 +239,32 @@ const RegisterScreen =()=>{
         {!isEmailAvail || !isEmailValid ? <Text style={Style.errorMsg}>{emailErr}</Text> : null }
         </View>
          <View style={!passwordErr? Style.inputContainerPass : Style.inputContainerPassMsg}>
+
            <View>
+
          <Text style={Style.label}>Password</Text>
+         <View style={Style.passEye}>
+
          <TextInput        
           ref={passwordRef}
-          onEndEditing={userCheckValid()}
+          onEndEditing={userCheckValid}
           onChangeText={(text)=>{
             passwordRef.current.value=text;
             dispatch(setUserpassword({password:text}));
             ValidateSignupPassword();
           }} 
           value={user.password} 
-         placeholder="Create your password"   secureTextEntry={!showPassword} textContentType="password" style={Style.inputReg} />
+         placeholder="Create your password"   secureTextEntry={!showPassword} textContentType="password" style={Style.inputReg2} />
 
+          <TouchableOpacity activeOpacity={1} style={Style.eye}  onPress={toggleShowPassword} >
+         <Feather     name={!showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
+         </TouchableOpacity> 
+
+         </View>
         {!isPasswordValid ? <Text style={Style.errorMsg}>{passwordErr}</Text> : <></>} 
          </View>
         
-         <TouchableOpacity activeOpacity={1} style={!passwordErr?Style.eye:Style.eyeErr}  onPress={toggleShowPassword} >
-         <Feather     name={!showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
-         </TouchableOpacity> 
+         
 
         </View>
 

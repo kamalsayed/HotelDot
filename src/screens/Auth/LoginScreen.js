@@ -13,7 +13,6 @@ const LoginScreen =({props})=>{
 
     const user = useSelector((state) => state.users.user);
     const dispatch = useDispatch();
-
     const [showPassword, setShowPassword] = useState(false); 
     const [inputErr , setInputErr] = useState('');
     const toggleShowPassword = () => { 
@@ -56,6 +55,7 @@ const LoginScreen =({props})=>{
             <View>
          <Text style={Style.label}>Password</Text>
 
+         <View style={Style.passEye}>
          <TextInput
             onEndEditing={userCheckValid}
             onChangeText={(text)=>{
@@ -67,10 +67,15 @@ const LoginScreen =({props})=>{
             secureTextEntry={!showPassword} 
             textContentType="password" 
             style={Style.input}  />
-         </View>
-         <TouchableOpacity activeOpacity={1} style={user.valid?Style.eyeL:Style.eyeErr}  onPress={toggleShowPassword} >
+
+        <TouchableOpacity activeOpacity={1} style={Style.eye}  onPress={toggleShowPassword} >
          <Feather     name={!showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
          </TouchableOpacity> 
+
+         </View>
+
+         </View>
+         
          {!user.valid ? <Text style={Style.errorMsg}>Invalid username/email or password. Please try again. </Text> : <></>}  
         </View>
        

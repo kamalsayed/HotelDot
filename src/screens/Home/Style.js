@@ -31,7 +31,8 @@ const Style = StyleSheet.create({
         fontSize:28,
         fontFamily:'NunitoSans_400Regular',
         fontWeight:"800",
-        width:"65%"
+        width:"65%",
+        lineHeight:50,
     },
     categories:{
         marginEnd:'10%',
