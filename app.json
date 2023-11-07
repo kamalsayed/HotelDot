@@ -16,10 +16,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/Group11.png",
         "backgroundColor": "#00A76ECC"
-      }
+      },
+      "package": "com.kamalsayedin.HotelDot"
     },
     "web": {
       "favicon": "./assets/Group11.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "10071eee-cfcd-4301-8e4a-dc3c797a0f1c"
+      }
     }
   }
 }

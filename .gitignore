@@ -35,6 +35,6 @@ yarn-error.*
 *.tsbuildinfo
 
 #firebase configurations file
-src/screens/Auth/configuration.js
+#src/screens/Auth/configuration.js
 
-configuration.*
+#configuration.*
