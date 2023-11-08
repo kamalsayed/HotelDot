@@ -112,31 +112,6 @@ export default function App() {
         }} name="Auth"
         component={AuthScreen} />
 
-      {/*   <Stack.Screen  options={{
-           headerShown:false,
-           gestureEnabled:false,
-           
- 
-         }} name="Home" component={HomeScreen} />
-
-        <Stack.Screen  options={{
-           headerShown:true,
-           headerBackground: () => (
-            <View style={{ backgroundColor: `${Color.screen}`, flex: 1  }} />
-          ),
-          headerTitleStyle:{
-              fontFamily:'NunitoSans_400Regular',
-              fontSize:25,
-              fontWeight: '700', // Adjust the font weight as needed           
-              color:`${Color.dark}`
-          },
-          
-          
- 
-         }} name="Description" component={DetailsScreen} />
-        
- */}
-
         </Stack.Group> 
         
         
@@ -158,7 +133,7 @@ export default function App() {
           headerTitleStyle:{
               fontFamily:'NunitoSans_400Regular',
               fontSize:25,
-              fontWeight: '700', // Adjust the font weight as needed           
+              fontWeight: '700',          
               color:`${Color.dark}`
           },
          }} name="Description" component={DetailsScreen} />
