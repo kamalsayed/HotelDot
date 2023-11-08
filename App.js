@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { AppState, View } from 'react-native';
+import { AppState, View , I18nManager } from 'react-native';
 import OnboardingScreen from './src/screens/Onboarding/OnboardingScreen';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import CustomSplashScreen from './src/screens/Splash/SplashScreen';
 import { loadFonts } from './src/constants/expo-fonts';
 import { NavigationContainer } from '@react-navigation/native';
@@ -26,6 +26,8 @@ export default function App() {
   const locale = Localization.locale;
 
   const isRTL = locale.startsWith('ar') || locale.startsWith('he');
+
+  I18nManager.forceRTL(false);
 
   const [appState, setAppState] = useState(AppState.currentState);
  
