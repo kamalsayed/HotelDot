@@ -45,7 +45,7 @@ const AuthScreen = ({navigation})=>{
         email,
       });
       setLoading(false); //end process
-      Alert.alert('Success', 'Account created successfully');
+      Alert.alert('Success', 'Welcome onboard !');
       dispatch(ResetUser());
       SetSelected(0);
     } catch (error) {
@@ -123,7 +123,7 @@ const AuthScreen = ({navigation})=>{
           }
     
       setLoading(false);
-      Alert.alert('Success', 'Logged in successfully');
+      Alert.alert('Success', 'Welcome Back !');
 
       navigation.navigate('Home');
 
