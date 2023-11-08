@@ -27,7 +27,7 @@ export default function App() {
 
   const isRTL = locale.startsWith('ar') || locale.startsWith('he');
 
-  I18nManager.forceRTL(false);
+  
 
   const [appState, setAppState] = useState(AppState.currentState);
  
@@ -53,6 +53,12 @@ export default function App() {
    
   
   useEffect(()=>{
+
+    //rtl
+    if(isRTL){
+      I18nManager.forceRTL(false);
+    }
+    
     setTimeout(async ()=>{
       setSplash(!splash);
     },3000);
