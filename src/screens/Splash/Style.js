@@ -16,7 +16,7 @@ export const Style=StyleSheet.create({
         tintColor:`${Color.white}`,
         alignSelf:'flex-end',
         resizeMode:'contain',
-     
+        
         
     },
     top:{

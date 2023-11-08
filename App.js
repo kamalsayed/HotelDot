@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { AppState, StyleSheet, Text, View } from 'react-native';
+import { AppState, View } from 'react-native';
 import OnboardingScreen from './src/screens/Onboarding/OnboardingScreen';
 import { useEffect, useState } from 'react';
 import CustomSplashScreen from './src/screens/Splash/SplashScreen';
@@ -14,12 +14,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DetailsScreen from './src/screens/Details/Details';
 import Color from './src/constants/colors';
 import { auth } from './src/screens/Auth/configuration';
+import * as Localization from 'expo-localization';
+
 
 
 const Stack = createNativeStackNavigator();
 
 
 export default function App() {
+
+  const locale = Localization.locale;
+
+  const isRTL = locale.startsWith('ar') || locale.startsWith('he');
 
   const [appState, setAppState] = useState(AppState.currentState);
  
