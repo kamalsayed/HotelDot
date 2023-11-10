@@ -38,3 +38,5 @@ yarn-error.*
 #src/screens/Auth/configuration.js
 
 #configuration.*
+
+apks/

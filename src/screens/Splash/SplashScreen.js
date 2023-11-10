@@ -9,12 +9,12 @@ const CustomSplashScreen = ()=>{
     return(
         <View style={!localRTl?Style.mainContainer:Style.mainContainerRTL}>
            
-           <Image style={Style.top} source={ImgPath.vector}/>
+           <Image style={!localRTl?Style.top:Style.topRTl} source={ImgPath.vector}/>
 
             <View style={Style.mid}>    
                 <Logo props={{type:1}} />
             </View>
-            <Image style={Style.bot} source={ImgPath.vector}/>
+            <Image style={!localRTl?Style.bot:Style.botRTL} source={ImgPath.vector}/>
          </View>
             
     

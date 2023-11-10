@@ -15,12 +15,12 @@ const Style = StyleSheet.create({
  ImgRTL:{
    borderTopRightRadius:35,
    borderBottomRightRadius:35,
-   marginRight:5,
+   marginLeft:5,
    height:'80%',
    width:'88%',
    top:'8%',
    resizeMode:'cover',
-   alignSelf:'flex-start'
+   alignSelf:'flex-end'
 },
  Header:{
     fontFamily:'NunitoSans_700Bold',

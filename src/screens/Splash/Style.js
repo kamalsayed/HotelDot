@@ -25,6 +25,11 @@ export const Style=StyleSheet.create({
         alignSelf:'flex-end',
         resizeMode:'contain',
   
+    },botRTL:{
+        tintColor:`${Color.white}`,
+        alignSelf:'flex-start',
+        resizeMode:'contain',
+  
     },
    
     top:{
@@ -32,6 +37,11 @@ export const Style=StyleSheet.create({
         transform: [{rotate: '-180deg'}],
         resizeMode:'contain',
         alignSelf:'flex-start'
+    },topRTl:{
+        tintColor:`${Color.white}`,
+        transform: [{rotate: '-180deg'}],
+        resizeMode:'contain',
+        alignSelf:'flex-end'
     },
    
    

@@ -8,6 +8,12 @@ const Style = StyleSheet.create({
         borderRadius: 25,
         overflow: 'hidden',
         //backgroundColor: 'linear-gradient(180deg, rgba(36, 36, 36, 0.00) 52.71%, #3C3C3C 95.95%)',
+    },containerRTL:{
+        marginStart:25,
+        //width:'100%'
+        borderRadius: 25,
+        overflow: 'hidden',
+        //backgroundColor: 'linear-gradient(180deg, rgba(36, 36, 36, 0.00) 52.71%, #3C3C3C 95.95%)',
     },
     image:{
         width:256,
@@ -40,6 +46,19 @@ const Style = StyleSheet.create({
         marginEnd:10,
         marginTop:10,
     },
+    rateRectangleRTL:{
+        flexDirection:'row-reverse',
+        width:'30%',
+        paddingHorizontal:'4%',
+        paddingVertical:'3.5%',
+        borderRadius:20,
+        alignItems:'center',
+        justifyContent:'space-around',
+        backgroundColor:'rgba(62, 62, 62, 0.6)',
+        alignSelf:'flex-start',
+        marginEnd:'4%',
+        marginTop:10,
+    },
     rateTxt:{
         fontFamily:'NunitoSans_400Regular',
         fontSize:14,
@@ -56,6 +75,16 @@ const Style = StyleSheet.create({
         marginStart:24,
         top:'68%',
     },
+    nameRTL:{
+        letterSpacing:0.5,
+        fontFamily:'NunitoSans_700Bold',
+        fontSize:20,
+        fontWeight:'700',
+        lineHeight:30,
+        color:`${Color.white}`,
+        marginEnd:24,
+        top:'68%',
+    },
     location:{
         fontFamily:'NunitoSans_700Bold',
         fontSize:14,
@@ -63,6 +92,16 @@ const Style = StyleSheet.create({
         lineHeight:30,
         color:`${Color.white}`,
         marginStart:24,
+        top:'69%',
+
+    },
+    locationRTL:{
+        fontFamily:'NunitoSans_700Bold',
+        fontSize:14,
+        fontWeight:'600',
+        lineHeight:30,
+        color:`${Color.white}`,
+        marginEnd:24,
         top:'69%',
 
     },

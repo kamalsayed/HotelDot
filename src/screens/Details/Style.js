@@ -36,6 +36,17 @@ const Style = StyleSheet.create({
         justifyContent:"space-around",
         alignItems:'center'
     },
+    SmallCardContainerRTL:{
+        flex:2,
+        backgroundColor: `${Color.white}` ,
+        flexDirection:'row-reverse',
+        height:125,
+        borderRadius:10,
+        marginBottom:35,
+        marginTop:15,
+        justifyContent:"space-around",
+        alignItems:'center'
+    },
     smallImage:{
         width:95,
         height:95,
@@ -59,6 +70,13 @@ const Style = StyleSheet.create({
     },
     rateContainer:{
         flexDirection:'row',
+        alignContent:'center',
+        justifyContent:'space-between',
+        alignItems:'baseline',
+        marginEnd:'20%'
+    },
+    rateContainerRTL:{
+        flexDirection:'row-reverse',
         alignContent:'center',
         justifyContent:'space-between',
         alignItems:'baseline',

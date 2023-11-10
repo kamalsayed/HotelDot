@@ -21,7 +21,7 @@ const Style = StyleSheet.create({
     },
     HeadersRTL:{
         felx:1,
-        flexDirection:'row',
+        flexDirection:'row-reverse',
         backgroundColor:`${Color.white}`,
         height:66,
        // marginVertical:'10%',
@@ -64,6 +64,7 @@ const Style = StyleSheet.create({
     AuthScreen:{
         backgroundColor:'#FAFAFA',
         flex:1,
+       
         
     },
     //// Login Style
@@ -122,7 +123,7 @@ const Style = StyleSheet.create({
     justifyContent:'space-between'
    },
    passEyeRTL:{
-    flexDirection:'row-reverse',
+    flexDirection:'row',
     justifyContent:'space-between'
    },
     inputContainerPass:{
@@ -130,7 +131,7 @@ const Style = StyleSheet.create({
         marginBottom:'12%',
         overflow:'hidden',
         width:'100%',
- 
+      
     },
     inputContainerPassMsg:{
         alignContent:'center',
@@ -148,7 +149,27 @@ const Style = StyleSheet.create({
         color:`${Color.dark}`
     },
     input:{
-        paddingHorizontal:'8%',
+        paddingLeft:'8%',
+        paddingRight:'12%',
+        width:'100%',
+        paddingVertical:15,
+        borderRadius:25,
+        overflow:'hidden',
+        backgroundColor:`${Color.white}`,
+        color:`${Color.dark}`,
+        fontFamily:'NunitoSans_400Regular',
+        fontWeight:"600",
+        fontSize:16,
+        lineHeight:22,
+        shadowColor:'#939393',
+        shadowOffset:{width:0,height:10},
+        shadowOpacity:0.1,
+        shadowRadius:75,
+        textAlign:'left',    
+        
+    },inputRTL:{
+        paddingLeft:'12%',
+        paddingRight:'8%',
         width:'100%',
         paddingVertical:15,
         borderRadius:25,
@@ -168,7 +189,28 @@ const Style = StyleSheet.create({
     },
     inputReg:{
         
-        paddingHorizontal:'8%',
+        paddingLeft:'8%',
+        paddingRight:'12%',
+        width:'100%',
+        paddingVertical:15,
+        borderRadius:25,
+        overflow:'hidden',
+        backgroundColor:`${Color.white}`,
+        color:`${Color.dark}`,
+        fontFamily:'NunitoSans_400Regular',
+        fontWeight:"600",
+        fontSize:14,
+        lineHeight:22,
+        shadowColor:'#939393',
+        shadowOffset:{width:0,height:10},
+        shadowOpacity:0.1,
+        shadowRadius:75,
+        textAlign:'left',    
+        
+    },inputRegRTL:{
+        
+        paddingLeft:'12%',
+        paddingRight:'8%',
         width:'100%',
         paddingVertical:15,
         borderRadius:25,
@@ -216,7 +258,29 @@ const Style = StyleSheet.create({
 
     inputReg2:{
         flex:1,
-        paddingHorizontal:'8%',
+        paddingLeft:'8%',
+        paddingRight:'12%',
+        width:'100%',
+        paddingVertical:15,
+        borderRadius:25,
+        overflow:'hidden',
+        backgroundColor:`${Color.white}`,
+        color:`${Color.dark}`,
+        fontFamily:'NunitoSans_400Regular',
+        fontWeight:"600",
+        fontSize:14,
+        lineHeight:22,
+        shadowColor:'#939393',
+        shadowOffset:{width:0,height:10},
+        shadowOpacity:0.1,
+        shadowRadius:75,
+        textAlign:'left',    
+        
+    },inputReg2RTL:{
+        flex:1,
+        paddingLeft:'12%',
+        paddingRight:'8%',
+        
         width:'100%',
         paddingVertical:15,
         borderRadius:25,

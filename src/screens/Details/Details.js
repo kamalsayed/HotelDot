@@ -3,6 +3,7 @@ import Color from "../../constants/colors";
 import MyButton from "../../components/Button/MyButton";
 import { AntDesign } from '@expo/vector-icons';
 import Style from "./Style";
+import { useSelector } from "react-redux";
 
 const DetailsScreen = ({route})=>{
     const receivedData = route.params?.data || {};
@@ -11,12 +12,13 @@ const DetailsScreen = ({route})=>{
     const location = route.params?.location || {};
     const rate = route.params?.rate || {};
     const review = route.params?.review || {};
+    const localRTl = useSelector((state) => state.localizationState.isRTL);
     return(
         <ScrollView style={Style.outerContainer}>
         <View style={Style.ScreenContainer}>
 
           
-            <View style={Style.SmallCardContainer}>
+            <View style={!localRTl?Style.SmallCardContainer:Style.SmallCardContainerRTL}>
 
                 <View style={Style.imgContainer}>
                 <Image source={img} style={Style.smallImage}  />
@@ -27,7 +29,7 @@ const DetailsScreen = ({route})=>{
                 <Text style={Style.hotelName}>{name}</Text>
                 <Text style={Style.hotelLocation}>{location}</Text>   
 
-                <View style={Style.rateContainer}>
+                <View style={!localRTl?Style.rateContainer:Style.rateContainerRTL}>
 
                     <AntDesign name="star" size={20} color={Color.yellow} /> 
                     <Text style={Style.hotelRate}>{rate}</Text>

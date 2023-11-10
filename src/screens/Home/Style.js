@@ -18,7 +18,10 @@ const Style = StyleSheet.create({
     },
     Greeting:{
         flex:2,
-        
+       alignItems:'flex-start',
+    },GreetingRTL:{
+        flex:2,
+       alignItems:'flex-end',
     },
 
     Iconstyle:{
@@ -27,6 +30,13 @@ const Style = StyleSheet.create({
        justifyContent:'flex-end',
        marginBottom:'10%',
        marginEnd:'6%'
+    },
+     IconstyleRTL:{
+      flex:1,
+       alignSelf:'flex-start',
+       justifyContent:'flex-start',
+       marginBottom:'10%',
+       marginStart:'6%'
     },
     GreetingMsg:{
         fontSize:28,
@@ -38,11 +48,20 @@ const Style = StyleSheet.create({
     categories:{
         marginEnd:'10%',
     },
+    categoriesRTL:{
+        marginStart:'10%',
+    },
     selectCategories:{
         flex:1.5,
         flexDirection:'row',
         justifyContent:'space-between',
         
+        
+    },selectCategoriesRTL:{
+        flex:1.5,
+        flexDirection:'row-reverse',
+        justifyContent:'space-between',
+        marginEnd:50,
     },
     Selected:{
         marginEnd:'5%',
@@ -73,27 +92,47 @@ const Style = StyleSheet.create({
         marginTop:"10%",
         flexDirection:'column',
         paddingVertical:'5%',
+        
     },
     pointerContainer:{
         flex:1,
-        flexDirection:'row',
-        
+        flexDirection:'row',   
         justifyContent:'space-between',
         paddingHorizontal:'9%',
         marginLeft:'2%'
-
-        
-        
-
+    },pointerContainerRTL:{
+        flex:1,
+        flexDirection:'row-reverse',   
+        justifyContent:'space-between',
+        paddingHorizontal:'9%',
+        marginLeft:'2%'
     },
     Hotels:{
         flex:10,
         //width:'100%',
         flexDirection:'row',
-        
-        
-       
-    }
+    },
+    HotelsRTL:{
+        flex:10,
+        //width:'100%',
+        flexDirection:'row-reverse',
+        justifyContent:'flex-end'
+    },
+    S0:{color:Color.success
+        , fontSize:75,
+        lineHeight:30,
+        marginEnd:'2%'
+    },
+    S0_:{
+        color:Color.success
+        , fontSize:75,
+        lineHeight:30,
+        marginStart:'2%'
+    },
+    S1:{color:Color.success , fontSize:75,lineHeight:30,marginStart:'50%'},
+    S1_:{color:Color.success , fontSize:75,lineHeight:30,marginEnd:'50%'},
+    S2:{color:Color.success , fontSize:75,lineHeight:30,marginStart:'93%'},
+    S2_:{color:Color.success , fontSize:75,lineHeight:30,marginEnd:'93%'},
 
 
 });

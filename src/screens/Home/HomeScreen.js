@@ -12,7 +12,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { setUsermail, setUsername, setUserpassword } from "../../Redux/userSlice";
 
 const HomeScreen = ({navigation})=>{
-
+    const localRTl = useSelector((state) => state.localizationState.isRTL);
     const [greeting, setGreeting] = useState('');
     const user = useSelector((state) => state.users.user);
     const dispatch = useDispatch();
@@ -94,7 +94,7 @@ const HomeScreen = ({navigation})=>{
 
         <View style={Style.ScreenContainer}>
             
-            <View  style={Style.Iconstyle}> 
+            <View  style={!localRTl?Style.Iconstyle:Style.IconstyleRTL}> 
                 {/* Icon section */}
             <TouchableOpacity onPress={()=>{
                 auth.signOut();
@@ -103,7 +103,7 @@ const HomeScreen = ({navigation})=>{
             </TouchableOpacity>
             </View>  
 
-        <View style={Style.Greeting}>
+        <View style={!localRTl?Style.Greeting:Style.GreetingRTL}>
             {/* Greeting Section */}
             <Text numberOfLines={2} ellipsizeMode="tail" style={Style.GreetingMsg}>{greeting},</Text>
             <Text numberOfLines={2} ellipsizeMode="tail" style={Style.GreetingMsg}>{name}!</Text>
@@ -111,31 +111,31 @@ const HomeScreen = ({navigation})=>{
 
         <View style={Style.categoriesContainer}>
 
-        <View style={Style.selectCategories}>
+        <View style={!localRTl?Style.selectCategories:Style.selectCategoriesRTL}>
             {/* Choose categories */}
 
-            <TouchableOpacity onPress={()=>{setSelected(0)}} style={Style.categories}>
+            <TouchableOpacity onPress={()=>{setSelected(0)}} style={!localRTl?Style.categories:Style.categoriesRTL}>
             <Text style={selected == 0 ? Style.Selected : Style.NotSelected}>Recommend</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={()=>{setSelected(1)}} style={Style.categories}> 
+            <TouchableOpacity onPress={()=>{setSelected(1)}} style={!localRTl?Style.categories:Style.categoriesRTL}> 
             <Text style={selected == 1 ? Style.Selected : Style.NotSelected}>Popular</Text> 
             </TouchableOpacity>
 
-           <TouchableOpacity onPress={()=>{setSelected(2)}} style={Style.categories}>
+           <TouchableOpacity onPress={()=>{setSelected(2)}} style={!localRTl?Style.categories:Style.categoriesRTL}>
            <Text style={selected == 2 ? Style.Selected : Style.NotSelected}>Trending</Text>
            </TouchableOpacity>
             
             
         </View>
 
-        <View style={Style.pointerContainer}>
+        <View style={!localRTl?Style.pointerContainer:Style.pointerContainerRTL}>
 
-            {selected == 0 ? <Text style={{color:Color.success , fontSize:75,lineHeight:30,marginEnd:'2%'}}>.</Text> : <></>}
+            {selected == 0 ? <Text style={!localRTl?Style.S0:Style.S0_}>.</Text> : <></>}
             
-            {selected == 1 ? <Text style={{color:Color.success , fontSize:75,lineHeight:30,marginStart:'50%'}}>.</Text> :<></>}
+            {selected == 1 ? <Text style={!localRTl?Style.S1:Style.S1_}>.</Text> :<></>}
 
-            {selected == 2 ?  <Text style={{color:Color.success , fontSize:75,lineHeight:30,marginStart:'93%'}}>.</Text> : <></>}
+            {selected == 2 ?  <Text style={!localRTl?Style.S2:Style.S2_}>.</Text> : <></>}
             
             
             
@@ -146,9 +146,10 @@ const HomeScreen = ({navigation})=>{
         
        </View>
 
-        <View style={Style.Hotels}>
+        <View style={!localRTl?Style.Hotels:Style.HotelsRTL}>
             <FlatList
             data={HotelsDummy}
+            style={{direction:'ltr'}}
             renderItem={({item})=>(
             
             <HotelCard  name={item.hotelName} 
@@ -163,9 +164,11 @@ const HomeScreen = ({navigation})=>{
             )}
             keyExtractor={(item)=>item.id}
             horizontal={true}
+            
             showsHorizontalScrollIndicator={false}
             alwaysBounceHorizontal={true}
             initialNumToRender={2}
+            
             />   
         </View>
 

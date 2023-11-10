@@ -67,7 +67,7 @@ const LoginScreen =({props})=>{
             placeholder="Enter your password" 
             secureTextEntry={!showPassword} 
             textContentType="password" 
-            style={Style.input}  />
+            style={!localRTl?Style.input:Style.inputRTL}  />
 
         <TouchableOpacity activeOpacity={1} style={!localRTl?Style.eye:Style.eyeRTL}  onPress={toggleShowPassword} >
          <Feather     name={!showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
@@ -81,7 +81,7 @@ const LoginScreen =({props})=>{
         </View>
        
         {/* Add error message */}
-        <View style={Style.questionContainer}>
+        <View style={!localRTl?Style.questionContainer:Style.questionContainerRTL}>
             <TouchableOpacity style={Style.questionBtn}> 
                 <Text style={Style.questionBtnTxt}>Forgot Password?</Text>
             </TouchableOpacity>

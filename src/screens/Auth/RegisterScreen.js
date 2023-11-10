@@ -256,7 +256,7 @@ const RegisterScreen =()=>{
             ValidateSignupPassword();
           }} 
           value={user.password} 
-         placeholder="Create your password"   secureTextEntry={!showPassword} textContentType="password" style={Style.inputReg2} />
+         placeholder="Create your password"   secureTextEntry={!showPassword} textContentType="password" style={!localRTl?Style.inputReg2:Style.inputReg2RTL} />
 
           <TouchableOpacity activeOpacity={1} style={!localRTl?Style.eye:Style.eyeRTL}  onPress={toggleShowPassword} >
          <Feather     name={!showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
