@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 const OnboardingScreen = ({navigation})=>{
     const user = useSelector((state) => state.users.user);
     const dispatch = useDispatch();
-
+    const localRTl = useSelector((state) => state.localizationState.isRTL);
     const go = useCallback(()=>{
         navigation.navigate('Auth');
     },[]);
@@ -23,7 +23,7 @@ const OnboardingScreen = ({navigation})=>{
         <SafeAreaView>
         <View>
             <View>
-                <Image style={Style.Img} source={ImgPath.onboard} />
+                <Image style={!localRTl?Style.Img:Style.ImgRTL} source={ImgPath.onboard} />
             </View>
 
             <View style={Style.txtContainer}>

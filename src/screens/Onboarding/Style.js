@@ -9,8 +9,19 @@ const Style = StyleSheet.create({
     height:'80%',
     width:'88%',
     top:'8%',
-    resizeMode:'cover'
+    resizeMode:'cover',
+    alignSelf:'flex-start'
  },
+ ImgRTL:{
+   borderTopRightRadius:35,
+   borderBottomRightRadius:35,
+   marginRight:5,
+   height:'80%',
+   width:'88%',
+   top:'8%',
+   resizeMode:'cover',
+   alignSelf:'flex-start'
+},
  Header:{
     fontFamily:'NunitoSans_700Bold',
     fontWeight:'700',

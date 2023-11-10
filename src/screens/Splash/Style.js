@@ -4,7 +4,15 @@ export const Style=StyleSheet.create({
     mainContainer:{
         flex:1,
         backgroundColor:`${Color.darkgreen}`,
-        flexDirection:'column'
+        flexDirection:'column',
+
+    },
+    mainContainerRTL:{
+        flex:1,
+        backgroundColor:`${Color.darkgreen}`,
+        flexDirection:'column',
+        justifyContent:'flex-end',
+        
     },
     mid:{
         flex:1,
@@ -16,14 +24,15 @@ export const Style=StyleSheet.create({
         tintColor:`${Color.white}`,
         alignSelf:'flex-end',
         resizeMode:'contain',
-        
-        
+  
     },
+   
     top:{
         tintColor:`${Color.white}`,
         transform: [{rotate: '-180deg'}],
         resizeMode:'contain',
-        
-    }
+        alignSelf:'flex-start'
+    },
+   
    
 });

@@ -13,10 +13,15 @@ import { addDoc ,getDocs,query, collection , where , limit} from "firebase/fires
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Color from "../../constants/colors";
 
+
+
+
 const AuthScreen = ({navigation})=>{
 
   const user = useSelector((state) => state.users.user);
 
+  const localRTl = useSelector((state) => state.localizationState.isRTL);
+  
   const dispatch = useDispatch();
 
   const [selected,SetSelected]=useState(0); //0 login , 1 sign up
@@ -158,7 +163,7 @@ const AuthScreen = ({navigation})=>{
             <Logo props={{type:0}} />
             </View>
 
-            <View style={Style.Headers}>
+            <View style={!localRTl?Style.Headers:Style.HeadersRTL}>
               <TouchableOpacity activeOpacity={1} onPress={()=>{
                 if(selected===1){
                   dispatch(ResetUser());

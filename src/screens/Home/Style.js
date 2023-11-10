@@ -18,6 +18,7 @@ const Style = StyleSheet.create({
     },
     Greeting:{
         flex:2,
+        
     },
 
     Iconstyle:{
@@ -32,7 +33,7 @@ const Style = StyleSheet.create({
         fontFamily:'NunitoSans_400Regular',
         fontWeight:"800",
         width:"65%",
-        lineHeight:50,
+        marginTop:10,
     },
     categories:{
         marginEnd:'10%',

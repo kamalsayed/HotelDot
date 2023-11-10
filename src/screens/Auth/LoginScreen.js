@@ -12,6 +12,7 @@ import { changeValidState, setUsermail, setUsername, setUserpassword} from '../.
 const LoginScreen =({props})=>{
 
     const user = useSelector((state) => state.users.user);
+    const localRTl = useSelector((state) => state.localizationState.isRTL);
     const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false); 
     const [inputErr , setInputErr] = useState('');
@@ -36,7 +37,7 @@ const LoginScreen =({props})=>{
 
 
     return(
-        <View style={Style.LoginContainer}>
+        <View style={!localRTl?Style.LoginContainer:Style.LoginContainerRTL}>
 
         <View style={Style.inputContainer}>
             <Text style={Style.label}>Username or E-mail</Text>
@@ -55,7 +56,7 @@ const LoginScreen =({props})=>{
             <View>
          <Text style={Style.label}>Password</Text>
 
-         <View style={Style.passEye}>
+         <View style={!localRTl?Style.passEye:Style.passEyeRTL}>
          <TextInput
             onEndEditing={userCheckValid}
             onChangeText={(text)=>{
@@ -68,7 +69,7 @@ const LoginScreen =({props})=>{
             textContentType="password" 
             style={Style.input}  />
 
-        <TouchableOpacity activeOpacity={1} style={Style.eye}  onPress={toggleShowPassword} >
+        <TouchableOpacity activeOpacity={1} style={!localRTl?Style.eye:Style.eyeRTL}  onPress={toggleShowPassword} >
          <Feather     name={!showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
          </TouchableOpacity> 
 

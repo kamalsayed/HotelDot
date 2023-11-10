@@ -105,7 +105,8 @@ const HomeScreen = ({navigation})=>{
 
         <View style={Style.Greeting}>
             {/* Greeting Section */}
-            <Text numberOfLines={2} ellipsizeMode="tail" style={Style.GreetingMsg}>{greeting}, {name}!</Text>
+            <Text numberOfLines={2} ellipsizeMode="tail" style={Style.GreetingMsg}>{greeting},</Text>
+            <Text numberOfLines={2} ellipsizeMode="tail" style={Style.GreetingMsg}>{name}!</Text>
         </View>
 
         <View style={Style.categoriesContainer}>

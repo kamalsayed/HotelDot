@@ -14,6 +14,8 @@ const RegisterScreen =()=>{
     const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false); 
 
+    const localRTl = useSelector((state) => state.localizationState.isRTL);
+
     //const [usr, setUsr] = useState('');
 
     const usernameRef = useRef(null);
@@ -196,7 +198,7 @@ const RegisterScreen =()=>{
 
     return(
         
-        <View style={Style.LoginContainer}>
+        <View style={!localRTl?Style.LoginContainer:Style.LoginContainerRTL}>
 
         <View style={Style.inputContainer}>
             <Text style={Style.label}>Username</Text>
@@ -243,7 +245,7 @@ const RegisterScreen =()=>{
            <View>
 
          <Text style={Style.label}>Password</Text>
-         <View style={Style.passEye}>
+         <View style={!localRTl?Style.passEye:Style.passEyeRTL}>
 
          <TextInput        
           ref={passwordRef}
@@ -256,7 +258,7 @@ const RegisterScreen =()=>{
           value={user.password} 
          placeholder="Create your password"   secureTextEntry={!showPassword} textContentType="password" style={Style.inputReg2} />
 
-          <TouchableOpacity activeOpacity={1} style={Style.eye}  onPress={toggleShowPassword} >
+          <TouchableOpacity activeOpacity={1} style={!localRTl?Style.eye:Style.eyeRTL}  onPress={toggleShowPassword} >
          <Feather     name={!showPassword ? 'eye-off' : 'eye'} size={20} color={Color.grey} />
          </TouchableOpacity> 
 

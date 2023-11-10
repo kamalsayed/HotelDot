@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import Color from "../../constants/colors";
 
+
 const Style = StyleSheet.create({
     logo:{
         //flex:1,
@@ -10,6 +11,15 @@ const Style = StyleSheet.create({
         marginTop:'15%',
     },
     Headers:{
+        felx:1,
+        flexDirection:'row',
+        backgroundColor:`${Color.white}`,
+        height:66,
+       // marginVertical:'10%',
+        alignItems:'center',
+        
+    },
+    HeadersRTL:{
         felx:1,
         flexDirection:'row',
         backgroundColor:`${Color.white}`,
@@ -74,6 +84,13 @@ const Style = StyleSheet.create({
         alignItems:'flex-start',
       
         
+    },LoginContainerRTL:{
+        paddingTop:'10%',
+        justifyContent:'space-between',
+        alignContent:'center',
+        alignItems:'flex-end',
+      
+        
     },
     inputContainer:{
        
@@ -93,8 +110,19 @@ const Style = StyleSheet.create({
         end:'5%',
    
     },
+    eyeRTL:{
+        zIndex:1000,
+        position:'absolute',
+        alignSelf:'center',
+        end:'90%',
+   
+    },
    passEye:{
     flexDirection:'row',
+    justifyContent:'space-between'
+   },
+   passEyeRTL:{
+    flexDirection:'row-reverse',
     justifyContent:'space-between'
    },
     inputContainerPass:{
@@ -136,6 +164,7 @@ const Style = StyleSheet.create({
         shadowOpacity:0.1,
         shadowRadius:75,
         textAlign:'left',    
+        
     },
     inputReg:{
         
@@ -159,6 +188,10 @@ const Style = StyleSheet.create({
     },
     questionContainer:{
         alignSelf:'flex-end',
+        marginBottom:'5%',
+    },
+    questionContainerRTL:{
+        alignSelf:'flex-start',
         marginBottom:'5%',
     },
     questionBtn:{
